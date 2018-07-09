@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.post('/hackathonServices', function(req, res) {
 
-    var actionType = req.body;//.queryResult.parameters['actionType'];
+    var actionType = req.body.queryResult.parameters['actionType'];
     var returnString;
 
     switch (actionType) {
@@ -13,7 +13,7 @@ router.post('/hackathonServices', function(req, res) {
     }
 
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({"fulfillmentText" : actionType}));
+    res.send(JSON.stringify({"fulfillmentText" : returnString}));
 });
 
 function getOffers() {
