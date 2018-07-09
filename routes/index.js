@@ -12,7 +12,7 @@ router.get('/getPromos', function(req, res, next) {
 
 router.post('/getPromos', function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
-    res.json(JSON.stringify("{\"name\":\"Get 20% discount on your products now!\""));
+    res.send(JSON.stringify("{'name':'Get 20% discount on your products now!'"));
 });
 
 module.exports = router;
