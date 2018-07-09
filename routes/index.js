@@ -11,7 +11,7 @@ router.get('/getPromos', function(req, res, next) {
 });
 
 router.post('/getPromos', function(req, res, next) {
-    res.send("You have 20% off on the next purchase at Walmart !");
+    res.send(JSON.stringify("Get 20% discount on your products now!"));
 });
 
 module.exports = router;
