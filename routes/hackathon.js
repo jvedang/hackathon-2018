@@ -5,6 +5,8 @@ var router = express.Router();
 router.post('/hackathonServices', function(req, res) {
     
     console.log(req.body.originalDetectIntentRequest.payload['user']);
+    console.log(req.body.originalDetectIntentRequest.payload['inputs']);
+    console.log(req.body.originalDetectIntentRequest.payload['conversation']);
     var actionType = req.body.queryResult.parameters['actionType'];
     var firstName = req.body.queryResult.parameters['firstName'];
     var lastName = req.body.queryResult.parameters['lastName'];
@@ -19,6 +21,8 @@ router.post('/hackathonServices', function(req, res) {
         case "Deals":
         case "promotions":
         case "Promotions":
+        case "Discounts":
+        case "discounts":
             returnString = getOffers();
             break;
         case "enrollment":
