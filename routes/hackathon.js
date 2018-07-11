@@ -4,7 +4,7 @@ var router = express.Router();
 
 router.post('/hackathonServices', function(req, res) {
 
-    console.log(req.body);
+    console.log(JSON.parse(req.body.originalDetectIntentRequest.payload.user));
     var actionType = req.body.queryResult.parameters['actionType'];
     var firstName = req.body.queryResult.parameters['firstName'];
     var lastName = req.body.queryResult.parameters['lastName'];
