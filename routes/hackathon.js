@@ -11,7 +11,7 @@ router.post('/hackathonServices', function(req, res) {
     var firstName = req.body.queryResult.parameters['firstName'];
     var lastName = req.body.queryResult.parameters['lastName'];
     var emailAddress = req.body.queryResult.parameters['emailAddress'];
-    var userId = req.body.originalDetectIntentRequest.payload['user.userId'];
+    var userId = req.body.originalDetectIntentRequest.payload['user']['userId'];
     var action = req.body.queryResult['action'];
     console.log(actionType+" "+firstName+" "+lastName+" "+emailAddress);
     var returnString;
