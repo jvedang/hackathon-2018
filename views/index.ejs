@@ -11,6 +11,7 @@
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>'
     <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();">Sign out</a>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
     function onSignIn(googleUser) {
@@ -24,6 +25,13 @@
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
 };
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
     </script>
   </body>
 </html>
