@@ -21,8 +21,11 @@ router.post('/hackathonServices', function(req, res) {
         case "create an account":
             returnString = enrollUser(firstName,lastName,emailAddress);
             break;
+       default:
+            returnString = "Something went wrong, Please try again";
     }
 
+    console.log(returnString);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({"fulfillmentText" : returnString}));
 });
