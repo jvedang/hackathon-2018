@@ -13,11 +13,16 @@ router.post('/hackathonServices', function(req, res) {
 
     switch (actionType) {
         case "offers" :
+        case "Offers":
         case "deals":
+        case "Deals":
         case "promotions":
+        case "Promotions":
             returnString = getOffers();
             break;
         case "enrollment":
+        case "Enrollment":
+        case "Enroll":
         case "create an account":
             returnString = enrollUser(firstName,lastName,emailAddress);
             break;
