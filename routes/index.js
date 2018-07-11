@@ -17,7 +17,7 @@ router.post('/getPromos', function(req, res, next) {
     res.send(JSON.stringify({"fulfillmentText" : "You have 20% off now on !"}));
 });
 
-function onSignIn(googleUser) {
+exports.onSignIn = function(googleUser) {
     var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
