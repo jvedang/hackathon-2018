@@ -49,6 +49,8 @@ router.post('/hackathonServices', function(req, res) {
         case "Enrollment":
         case "Enroll":
         case "create an account":
+        case "Create an account":
+        case "Create Account":
             returnString = enrollUser(firstName,lastName,emailAddress);
             break;
        default:
