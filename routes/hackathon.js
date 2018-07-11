@@ -11,9 +11,29 @@ router.post('/hackathonServices', function(req, res) {
     var firstName = req.body.queryResult.parameters['firstName'];
     var lastName = req.body.queryResult.parameters['lastName'];
     var emailAddress = req.body.queryResult.parameters['emailAddress'];
+    var userId = req.body.originalDetectIntentRequest.payload['user.userId'];
+    var action = req.body.queryResult['action'];
     console.log(actionType+" "+firstName+" "+lastName+" "+emailAddress);
     var returnString;
 
+    if(action == "input.welcome") {
+        var obj = JSON.parse(fs.readFileSync('users.json', 'utf8'));
+
+        var users = obj.Users;
+
+        for(var i=0 ; i < users.length; i++) {
+            var storedUserId =  users[i]["userId"];
+            var firstName = users[i]['firstName'];
+            console.log("storedUserId :" +storedUserId);
+            console.log("userId: "+ userId);
+            if(storedUserId.toString().trim() == userId.toString().trim()) {
+                console.log("Inside");
+                return "Hi "+firstName + ", Welcome to Visa Checkout, how can I help you?";
+            } else {
+                return "Welcome to Visa Checkout, how can I help you?";
+            }
+        }
+    }
     switch (actionType) {
         case "offers" :
         case "Offers":
@@ -40,26 +60,6 @@ router.post('/hackathonServices', function(req, res) {
     res.send(JSON.stringify({"fulfillmentText" : returnString}));
 });
 
-// function getOffers() {
-//
-//     var responseFromAPI = testString;
-//
-//     var jsonForResponse = JSON.parse(responseFromAPI);
-//
-//     var offers = jsonForResponse.Offers;
-//
-//     var returnString = "";
-//
-//     offers.forEach(function(offer) {
-//         var validity = "from " + offer.validityFromDate + " until "+ offer.validityToDate;
-//         var offerName = offer.offerShortDescription['text'];
-//          returnString  +=  offerName + " " +validity +" ";
-//     });
-//
-//     return returnString;
-//
-// };
-
 function getOffers() {
     var responseFromAPI = testString;
     actualOffers = JSON.parse(responseFromAPI);
@@ -79,7 +79,7 @@ function getOffers() {
     return returnString;
 }
 
-function enrollUser(firstName, lastName, emailAddress) {
+function enrollUser(firstName, lastName, emailAddress, userId) {
     var obj = JSON.parse(fs.readFileSync('users.json', 'utf8'));
 
     var users = obj.Users;
@@ -93,11 +93,8 @@ function enrollUser(firstName, lastName, emailAddress) {
             return "Hi "+firstName + ", you already have an account in Visa Checkout";
         }
     }
-    // users.forEach(function(user) {
-    //
-    // });
 
-    users.push({"emailAddress": ""+emailAddress+"", "firstName": ""+firstName+"", "lastName": ""+lastName+""});
+    users.push({"emailAddress": ""+emailAddress+"", "firstName": ""+firstName+"", "lastName": ""+lastName+"", "userId": ""+userId+""});
     obj = JSON.stringify(obj);
     try {
         fs.writeFileSync('users.json', obj);
@@ -107,24 +104,6 @@ function enrollUser(firstName, lastName, emailAddress) {
     }
 }
 
-// var testString = "{" +
-//     "\"Offers\" : [{" +
-//     "\"validityFromDate\" : \"Sep 15, 2014 GMT\"," +
-//     "\"validityToDate\" : \"Dec 31, 2018 GMT\"," +
-//     "\"offerShortDescription\" : {\n" +
-//     "\"richText\" : \"Save $10 on $75 or more at acehardware.com\"," +
-//     "\"text\" : \"Save $10 on $75 or more at acehardware.com\"" +
-//     "}" +
-//     "" +
-//     "}, {" +
-//     "\"validityFromDate\" : \"Dec 30, 2016 GMT\"," +
-//     "\"validityToDate\" : \"Sep 31, 2018 GMT\"," +
-//     "\"offerShortDescription\" : {" +
-//     "\"richText\" : \"Save $20 on $100 or more at Frette\"," +
-//     "\"text\" : \"Save $20 on $100 or more at Frette\"" +
-//     "}" +
-//     "}]" +
-//     "}";
 var testString = "{" +
     "\"Offers\" : [{" +
     "\"indexNumber\": 1,"+
