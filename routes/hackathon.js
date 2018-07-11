@@ -36,10 +36,8 @@ router.post('/hackathonServices', function(req, res) {
                 
             }
         }
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({"fulfillmentText" : returnString}));
-    }
-    switch (actionType) {
+    } else {
+        switch (actionType) {
         case "offers" :
         case "Offers":
         case "deals":
@@ -60,6 +58,7 @@ router.post('/hackathonServices', function(req, res) {
             break;
        default:
             returnString = "Something went wrong, Please try again";
+    }
     }
 
     console.log(returnString);
