@@ -28,9 +28,11 @@ router.post('/hackathonServices', function(req, res) {
             console.log("userId: "+ userId);
             if(storedUserId.toString().trim() == userId.toString().trim()) {
                 console.log("Inside");
-                return "Hi "+firstName + ", Welcome to Visa Checkout, how can I help you?";
+                 returnString = "Hi "+firstName + ", Welcome to Visa Checkout, how can I help you?";
+                 //res.setHeader('Content-Type', 'application/json');
+                 //res.send(JSON.stringify({"fulfillmentText" : returnString}));
             } else {
-                return "Welcome to Visa Checkout, how can I help you?";
+                returnString = "Welcome to Visa Checkout, how can I help you?";
             }
         }
     }
