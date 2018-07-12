@@ -18,7 +18,7 @@ router.post('/hackathonServices', function(req, res) {
     if(action != undefined) {
         switch(action) {
             case "input.welcome":
-                var storedFirstName = isUserIDPresent();
+                var storedFirstName = isUserIDPresent(userId);
                 if(storedFirstName != null) {
                     returnString = "Hi "+storedFirstName + ", Welcome to Visa Checkout, how can I help you?";
                 } else {
@@ -26,7 +26,7 @@ router.post('/hackathonServices', function(req, res) {
                 }
                 break;
             case "validate_enrollment_request":
-                var storedFirstName = isUserIDPresent();
+                var storedFirstName = isUserIDPresent(userId);
                 if(storedFirstName != null) {
                     returnString = "Hi "+storedFirstName + ", you already have an account in Visa Checkout?";
                 } else {
@@ -139,7 +139,7 @@ function enrollUser(firstName, lastName, emailAddress, userId) {
     }
 }
 
-function isUserIDPresent() {
+function isUserIDPresent(userId) {
     var obj = JSON.parse(fs.readFileSync('users.json', 'utf8'));
     var users = obj.Users;
     for(var i=0 ; i < users.length; i++) {
