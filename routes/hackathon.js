@@ -163,8 +163,8 @@ var testString = "{" +
     "\"validityFromDate\" : \"Sep 15, 2014\"," +
     "\"validityToDate\" : \"Dec 31, 2018\"," +
     "\"offerShortDescription\" : {\n" +
-    "\"richText\" : \"Pay with Visa Checkout and get $20 oﬀ your $100+ UnderArmour.com order\"," +
-    "\"text\" : \"Pay with Visa Checkout and get $20 oﬀ your $100+ UnderArmour.com order\"" +
+    "\"richText\" : \"Pay with Visa Checkout and get $20 oﬀ your $100 or more UnderArmour.com order\"," +
+    "\"text\" : \"Pay with Visa Checkout and get $20 oﬀ your $100 or more UnderArmour.com order\"" +
     "}" +
     "}, {" +
     "\"indexNumber\": 2,"+
