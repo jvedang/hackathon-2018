@@ -28,7 +28,7 @@ router.post('/hackathonServices', function(req, res) {
             case "validate_enrollment_request":
                 var storedFirstName = isUserIDPresent(userId);
                 if(storedFirstName != null) {
-                    returnString = "Hi "+storedFirstName + ", you already have an account in Visa Checkout?";
+                    returnString = "Hi "+storedFirstName + ", you already have an account in Visa Checkout.";
                 } else {
                     returnString = "Do you give permission to access your account information?";
                 }
