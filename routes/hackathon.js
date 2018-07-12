@@ -12,6 +12,7 @@ router.post('/hackathonServices', function(req, res) {
     var userId = req.body.originalDetectIntentRequest.payload['user']['userId'];
     var action = req.body.queryResult['action'];
     console.log(actionType+" "+firstName+" "+lastName+" "+emailAddress);
+    console.log("Action is : "+action);
     var returnString;
 
     if(action != undefined) {
