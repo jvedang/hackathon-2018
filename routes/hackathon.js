@@ -38,6 +38,7 @@ router.post('/hackathonServices', function(req, res) {
                 break;
             case "search_vco_promotions":
                 returnString = getOffers();
+                break;
             default:
                 returnString = "Looks like something went wrong, Please try again";
         }
