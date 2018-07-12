@@ -36,6 +36,8 @@ router.post('/hackathonServices', function(req, res) {
             case "perform_enrollment":
                 returnString = enrollUser(firstName,lastName,emailAddress,userId);
                 break;
+            case "search_vco_promotions":
+                returnString = getOffers();
             default:
                 returnString = "Looks like something went wrong, Please try again";
         }
