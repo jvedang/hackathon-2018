@@ -5,8 +5,6 @@ var router = express.Router();
 router.post('/hackathonServices', function(req, res) {
     
     console.log(req.body.originalDetectIntentRequest.payload['user']);
-    console.log(req.body.originalDetectIntentRequest.payload['inputs']);
-    console.log(req.body.originalDetectIntentRequest.payload['conversation']);
     var actionType = req.body.queryResult.parameters['actionType'];
     var firstName = req.body.queryResult.parameters['firstName'];
     var lastName = req.body.queryResult.parameters['lastName'];
@@ -16,50 +14,81 @@ router.post('/hackathonServices', function(req, res) {
     console.log(actionType+" "+firstName+" "+lastName+" "+emailAddress);
     var returnString;
 
-    if(action == "input.welcome") {
-        var obj = JSON.parse(fs.readFileSync('users.json', 'utf8'));
-
-        var users = obj.Users;
-
-        for(var i=0 ; i < users.length; i++) {
-            var storedUserId =  users[i]["userId"];
-            var firstName = users[i]['firstName'];
-            console.log("storedUserId :" +storedUserId);
-            console.log("userId: "+ userId);
-            if(storedUserId.toString().trim() == userId.toString().trim()) {
-                console.log("Inside");
-                 returnString = "Hi "+firstName + ", Welcome to Visa Checkout, how can I help you?";
-                // res.setHeader('Content-Type', 'application/json');
-                // res.send(JSON.stringify({"fulfillmentText" : returnString}));
-            } else {
-                returnString = "Welcome to Visa Checkout, how can I help you?";
-                
-            }
+    if(action != undefined) {
+        switch(action) {
+            case "input.welcome":
+                var storedFirstName = isUserIDPresent();
+                if(storedFirstName != null) {
+                    returnString = "Hi "+storedFirstName + ", Welcome to Visa Checkout, how can I help you?";
+                } else {
+                    returnString = "Welcome to Visa Checkout, how can I help you?";
+                }
+                break;
+            case "validate_enrollment_request":
+                var storedFirstName = isUserIDPresent();
+                if(storedFirstName != null) {
+                    returnString = "Hi "+storedFirstName + ", you already have an account in Visa Checkout?";
+                } else {
+                    returnString = "Do you give permission to access your account information?";
+                }
+                break;
+            case "perform_enrollment":
+                returnString = enrollUser(firstName,lastName,emailAddress,userId);
+                break;
+            default:
+                returnString = "Looks like something went wrong, Please try again";
         }
     } else {
         switch (actionType) {
-        case "offers" :
-        case "Offers":
-        case "deals":
-        case "Deals":
-        case "promotions":
-        case "Promotions":
-        case "Discounts":
-        case "discounts":
-            returnString = getOffers();
-            break;
-        case "enrollment":
-        case "Enrollment":
-        case "Enroll":
-        case "create an account":
-        case "Create an account":
-        case "Create Account":
-            returnString = enrollUser(firstName,lastName,emailAddress,userId);
-            break;
-       default:
-            returnString = "Something went wrong, Please try again";
+            case "offers" :
+            case "Offers":
+            case "deals":
+            case "Deals":
+            case "promotions":
+            case "Promotions":
+            case "Discounts":
+            case "discounts":
+                returnString = getOffers();
+                break;
+            case "enrollment":
+            case "Enrollment":
+            case "Enroll":
+            case "create an account":
+            case "Create an account":
+            case "Create Account":
+                returnString = enrollUser(firstName,lastName,emailAddress,userId);
+                break;
+            default:
+                returnString = "Something went wrong, Please try again";
+        }
     }
-    }
+
+    // if(action == "input.welcome") {
+    //
+    // } else {
+    //     switch (actionType) {
+    //     case "offers" :
+    //     case "Offers":
+    //     case "deals":
+    //     case "Deals":
+    //     case "promotions":
+    //     case "Promotions":
+    //     case "Discounts":
+    //     case "discounts":
+    //         returnString = getOffers();
+    //         break;
+    //     case "enrollment":
+    //     case "Enrollment":
+    //     case "Enroll":
+    //     case "create an account":
+    //     case "Create an account":
+    //     case "Create Account":
+    //         returnString = enrollUser(firstName,lastName,emailAddress,userId);
+    //         break;
+    //    default:
+    //         returnString = "Something went wrong, Please try again";
+    // }
+    // }
 
     console.log(returnString);
     res.setHeader('Content-Type', 'application/json');
@@ -95,7 +124,6 @@ function enrollUser(firstName, lastName, emailAddress, userId) {
         console.log("StoredEmail :" +storedEmailAddress);
         console.log("Email: "+ emailAddress);
         if(storedEmailAddress.toString().trim() == emailAddress.toString().trim()) {
-            console.log("Inside");
             return "Hi "+firstName + ", you already have an account in Visa Checkout";
         }
     }
@@ -108,6 +136,21 @@ function enrollUser(firstName, lastName, emailAddress, userId) {
     }catch(err) {
         return "Could not enroll, Please try again";
     }
+}
+
+function isUserIDPresent() {
+    var obj = JSON.parse(fs.readFileSync('users.json', 'utf8'));
+    var users = obj.Users;
+    for(var i=0 ; i < users.length; i++) {
+        var storedUserId =  users[i]["userId"];
+        var firstName = users[i]['firstName'];
+        console.log("storedUserId :" +storedUserId);
+        console.log("userId: "+ userId);
+        if(storedUserId.toString().trim() == userId.toString().trim()) {
+            return firstName;
+        }
+    }
+    return null;
 }
 
 var testString = "{" +
