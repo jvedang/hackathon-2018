@@ -67,33 +67,6 @@ router.post('/hackathonServices', function(req, res) {
         }
     }
 
-    // if(action == "input.welcome") {
-    //
-    // } else {
-    //     switch (actionType) {
-    //     case "offers" :
-    //     case "Offers":
-    //     case "deals":
-    //     case "Deals":
-    //     case "promotions":
-    //     case "Promotions":
-    //     case "Discounts":
-    //     case "discounts":
-    //         returnString = getOffers();
-    //         break;
-    //     case "enrollment":
-    //     case "Enrollment":
-    //     case "Enroll":
-    //     case "create an account":
-    //     case "Create an account":
-    //     case "Create Account":
-    //         returnString = enrollUser(firstName,lastName,emailAddress,userId);
-    //         break;
-    //    default:
-    //         returnString = "Something went wrong, Please try again";
-    // }
-    // }
-
     console.log(returnString);
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({"fulfillmentText" : returnString}));
